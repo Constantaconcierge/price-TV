@@ -1,1398 +1,192 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Прайс-лист Компьютерного Клуба — 9:16 TV</title>
-  <!-- Tailwind CSS -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Современные геометрические и кириллические шрифты -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@700&family=Inter:wght@400;500;600;700;800;900&family=Montserrat:wght@700;800;900&family=Orbitron:wght@800;900&family=Russo+One&display=swap" rel="stylesheet" />
-
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: {
-            sans: ['Inter', 'sans-serif'],
-            display: ['Montserrat', 'sans-serif'],
-            cyber: ['Orbitron', 'Chakra Petch', 'sans-serif'],
-            block: ['Russo One', 'Orbitron', 'sans-serif'],
-          }
-        }
-      }
-    };
-  </script>
-
-  <style>
-    * {
-      box-sizing: border-box;
-      user-select: none;
-    }
-
-    body {
-      margin: 0;
-      padding: 0;
-      background-color: #030508;
-      color: #e6eef8;
-      font-family: 'Inter', sans-serif;
-      overflow-x: hidden;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    /* Адаптивный вертикальный контейнер 9:16 под Full HD телевизор (1080x1920) */
-    #tv-viewport {
-      position: relative;
+<!-- ... existing code ... -->
+    .tv-stage {
       width: 100vw;
-      max-width: min(100vw, 56.25vh);
-      height: min(100vh, 177.78vw);
-      background: radial-gradient(circle at 72% 18%, #0d1929 0%, #070c14 55%, #04070c 100%);
-      overflow: hidden;
-      box-shadow: 0 0 50px rgba(0, 0, 0, 0.85);
-      border: 1px solid rgba(56, 189, 248, 0.14);
-      transition: transform 1.5s ease-in-out;
-    }
-
-    @media (max-aspect-ratio: 10/16) {
-      #tv-viewport {
-        max-width: 100vw;
-        height: 100vh;
-        border: none;
-        box-shadow: none;
-      }
-    }
-
-    /* Спокойная техно-сетка на фоне (TV-safe, без бликов) */
-    .cyber-grid {
-      position: absolute;
-      inset: 0;
-      background-image:
-        linear-gradient(to right, rgba(45, 212, 191, 0.032) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(45, 212, 191, 0.032) 1px, transparent 1px);
-      background-size: 3.8% 2.15%;
-      mask-image: radial-gradient(ellipse at 65% 45%, black 35%, transparent 92%);
-      -webkit-mask-image: radial-gradient(ellipse at 65% 45%, black 35%, transparent 92%);
-      animation: gridBreathe 10s ease-in-out infinite alternate;
-      pointer-events: none;
-      z-index: 1;
-    }
-
-    @keyframes gridBreathe {
-      0% { opacity: 0.55; }
-      100% { opacity: 1; }
-    }
-
-    /* Мягкие фоновые световые пятна */
-    .ambient-teal {
-      position: absolute;
-      top: 10%;
-      right: -12%;
-      width: 58%;
-      height: 42%;
-      background: radial-gradient(circle, rgba(20, 184, 166, 0.09) 0%, transparent 72%);
-      filter: blur(36px);
-      animation: ambientFloat 12s ease-in-out infinite alternate;
-      pointer-events: none;
-      z-index: 1;
-    }
-
-    .ambient-crimson {
-      position: absolute;
-      bottom: 4%;
-      left: 6%;
-      width: 65%;
-      height: 36%;
-      background: radial-gradient(circle, rgba(225, 29, 72, 0.1) 0%, transparent 72%);
-      filter: blur(40px);
-      animation: ambientFloat 14s ease-in-out infinite alternate-reverse;
-      pointer-events: none;
-      z-index: 1;
-    }
-
-    @keyframes ambientFloat {
-      0% { transform: translateY(0) scale(0.96); opacity: 0.65; }
-      100% { transform: translateY(-2.5%) scale(1.05); opacity: 1; }
-    }
-
-    /* =========================================================
-       ЛЕВАЯ ВЕРТИКАЛЬНАЯ ПАНЕЛЬ И ВЫТЯНУТАЯ КОНТУРНАЯ НАДПИСЬ PRICE
-       ========================================================= */
-    .price-sidebar {
-      width: clamp(115px, 16.2%, 175px);
-      flex-shrink: 0;
-      background: linear-gradient(
-        180deg,
-        rgba(38, 8, 14, 0.92) 0%,
-        rgba(24, 6, 10, 0.96) 50%,
-        rgba(12, 5, 8, 0.98) 100%
-      );
-      border-right: 1px solid rgba(244, 63, 94, 0.28);
-      box-shadow: inset -12px 0 28px rgba(0, 0, 0, 0.55);
-    }
-
-    /* Бегущий снизу вверх световой импульс по правой границе */
-    .sidebar-beam-up {
-      position: absolute;
-      right: -1px;
-      bottom: -24%;
-      width: 2px;
-      height: 24%;
-      background: linear-gradient(to top, transparent, rgba(244, 63, 94, 0.85), rgba(255, 228, 230, 0.9), transparent);
-      box-shadow: 0 0 10px rgba(244, 63, 94, 0.55);
-      animation: beamRise 6.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-      pointer-events: none;
-    }
-
-    @keyframes beamRise {
-      0% { bottom: -24%; opacity: 0; }
-      18% { opacity: 0.95; }
-      82% { opacity: 0.95; }
-      100% { bottom: 105%; opacity: 0; }
-    }
-
-    /* Центрирующий бокс для вертикального текста без сдвигов */
-    .price-center-slot {
+      height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 100%;
-      height: 100%;
+      background: #010308;
+      overflow: hidden;
+      position: relative;
     }
 
-    /* Вытянутые крупные контурные буквы PRICE (снизу вверх, строго по центру) */
-    .hollow-price-stack {
-      display: inline-flex;
+    /* Обёртка для аппаратного поворота под вертикальный ТВ (90° по умолчанию) */
+    .tv-rotate-wrapper {
+      display: flex;
       align-items: center;
       justify-content: center;
-      writing-mode: vertical-rl;
       transform-origin: center center;
-      transform: rotate(180deg) scaleX(1.1) scaleY(1.36);
-      font-family: 'Russo One', 'Orbitron', sans-serif;
-      font-weight: 900;
-      letter-spacing: 0.13em;
-      line-height: 1;
-      text-transform: uppercase;
-      white-space: nowrap;
-      /* Полый геометрический контур + мягкая внутренняя подсветка */
-      color: transparent;
-      -webkit-text-stroke: 3.5px #d9384e;
-      text-shadow:
-        0 0 14px rgba(217, 56, 78, 0.34),
-        0 0 26px rgba(159, 18, 57, 0.22);
-      animation: hollowPulse 5.5s ease-in-out infinite alternate;
     }
 
-    /* Слой бегущего светового перелива внутри контура PRICE */
-    .hollow-price-sheen {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      writing-mode: vertical-rl;
-      transform-origin: center center;
-      transform: rotate(180deg) scaleX(1.1) scaleY(1.36);
-      font-family: 'Russo One', 'Orbitron', sans-serif;
-      font-weight: 900;
-      letter-spacing: 0.13em;
-      line-height: 1;
-      text-transform: uppercase;
-      white-space: nowrap;
-      background: linear-gradient(
-        0deg,
-        transparent 0%,
-        transparent 38%,
-        rgba(255, 220, 226, 0.78) 50%,
-        transparent 62%,
-        transparent 100%
-      );
-      background-size: 100% 260%;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      -webkit-text-stroke: 3.5px transparent;
-      animation: sheenSweepUp 6.5s ease-in-out infinite;
-      pointer-events: none;
-    }
-
-    @keyframes hollowPulse {
-      0% {
-        -webkit-text-stroke-color: rgba(217, 56, 78, 0.78);
-        filter: drop-shadow(0 0 8px rgba(217, 56, 78, 0.22));
-      }
-      100% {
-        -webkit-text-stroke-color: rgba(244, 92, 114, 0.96);
-        filter: drop-shadow(0 0 14px rgba(217, 56, 78, 0.38));
-      }
-    }
-
-    @keyframes sheenSweepUp {
-      0%, 20% { background-position: 0% 100%; opacity: 0.12; }
-      50% { opacity: 0.9; }
-      80%, 100% { background-position: 0% 0%; opacity: 0.12; }
-    }
-
-    /* =========================================================
-       КАРТОЧКИ И ТАБЛИЦЫ ТАРИФОВ (TV-SAFE МАТОВЫЙ ГРАФИТ)
-       ========================================================= */
-    .tv-card {
-      background: linear-gradient(160deg, rgba(13, 22, 36, 0.94) 0%, rgba(8, 14, 24, 0.97) 100%);
-      border: 1px solid rgba(45, 212, 191, 0.22);
-      box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.04),
-        0 8px 22px rgba(0, 0, 0, 0.5);
-      animation: cardBorderBreathe 6.5s ease-in-out infinite alternate;
-    }
-
-    @keyframes cardBorderBreathe {
-      0% {
-        border-color: rgba(45, 212, 191, 0.18);
-        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03), 0 8px 22px rgba(0, 0, 0, 0.5);
-      }
-      100% {
-        border-color: rgba(45, 212, 191, 0.34);
-        box-shadow: inset 0 1px 0 rgba(45, 212, 191, 0.08), 0 8px 24px rgba(0, 0, 0, 0.55);
-      }
-    }
-
-    /* Мягкое неоновое свечение логотипа */
-    .club-logo-slot svg,
-    .club-logo-slot img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      filter: drop-shadow(0 0 8px rgba(45, 212, 191, 0.32));
-    }
-
-    .zone-pill {
-      background: linear-gradient(90deg, rgba(17, 68, 74, 0.72) 0%, rgba(15, 52, 64, 0.55) 100%);
-      border: 1px solid rgba(45, 212, 191, 0.38);
-      color: #5eead4;
-    }
-
-    /* Строка тарифа с мягкой волной сканирования */
-    .tariff-row {
-      position: relative;
-      border-bottom: 1px solid rgba(148, 163, 184, 0.1);
-      padding-left: 0.4vh;
-      padding-right: 0.4vh;
-      border-radius: 0.45vh;
-      animation: rowScanWave 8s ease-in-out infinite;
-    }
-
-    .tariff-row:last-child {
-      border-bottom: none;
-    }
-
-    .tariff-row:nth-child(1) { animation-delay: 0s; }
-    .tariff-row:nth-child(2) { animation-delay: 0.55s; }
-    .tariff-row:nth-child(3) { animation-delay: 1.1s; }
-    .tariff-row:nth-child(4) { animation-delay: 1.65s; }
-    .tariff-row:nth-child(5) { animation-delay: 2.2s; }
-
-    @keyframes rowScanWave {
-      0%, 18%, 100% {
-        background-color: rgba(45, 212, 191, 0);
-      }
-      9% {
-        background-color: rgba(45, 212, 191, 0.055);
-      }
-    }
-
-    /* Акционная красная карточка снизу */
-    .promo-card {
-      position: relative;
-      overflow: hidden;
-      background: linear-gradient(145deg, rgba(32, 10, 16, 0.95) 0%, rgba(16, 7, 11, 0.98) 100%);
-      border: 1px solid rgba(244, 63, 94, 0.48);
-      box-shadow:
-        inset 0 0 24px rgba(225, 29, 72, 0.1),
-        0 8px 24px rgba(0, 0, 0, 0.55);
-      animation: promoBorderGlow 5s ease-in-out infinite alternate;
-    }
-
-    @keyframes promoBorderGlow {
-      0% {
-        border-color: rgba(244, 63, 94, 0.36);
-        box-shadow: inset 0 0 18px rgba(225, 29, 72, 0.07), 0 8px 24px rgba(0, 0, 0, 0.55);
-      }
-      100% {
-        border-color: rgba(251, 113, 133, 0.65);
-        box-shadow: inset 0 0 28px rgba(225, 29, 72, 0.15), 0 8px 26px rgba(0, 0, 0, 0.6);
-      }
-    }
-
-    /* Блик на бейдже СКОРО */
-    .badge-shimmer {
-      position: relative;
-      overflow: hidden;
-    }
-    .badge-shimmer::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -130%;
-      width: 75%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.32), transparent);
-      transform: skewX(-22deg);
-      animation: badgeSweep 5.5s ease-in-out infinite;
-    }
-
-    @keyframes badgeSweep {
-      0%, 55% { left: -130%; }
-      100% { left: 160%; }
-    }
-
-    /* Мини-карточки подарков в акции (по референсу: Кола + PS5) */
-    .gift-mini-card {
-      position: relative;
-      background: linear-gradient(145deg, rgba(10, 17, 30, 0.92) 0%, rgba(7, 11, 20, 0.96) 100%);
-      border: 1px solid rgba(244, 63, 94, 0.34);
-      box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.04),
-        0 4px 14px rgba(0, 0, 0, 0.45);
-    }
-
-    .gift-mini-card::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      border-radius: inherit;
-      background: radial-gradient(circle at 18% 50%, rgba(244, 63, 94, 0.12), transparent 62%);
-      pointer-events: none;
-    }
-
-    .gift-mini-card--ps5 {
-      border-color: rgba(56, 189, 248, 0.32);
-    }
-
-    .gift-mini-card--ps5::before {
-      background: radial-gradient(circle at 22% 50%, rgba(56, 189, 248, 0.12), transparent 62%);
-    }
-
-    /* Скроллбар для панели настроек */
-    ::-webkit-scrollbar {
-      width: 6px;
-    }
-    ::-webkit-scrollbar-track {
-      background: #060a10;
-    }
-    ::-webkit-scrollbar-thumb {
-      background: #e11d48;
-      border-radius: 999px;
-    }
-  </style>
-</head>
+    .tv-frame {
+<!-- ... existing code ... -->
 <body>
-
-  <!-- Главный вертикальный экран 9:16 -->
-  <div id="tv-viewport" class="flex flex-row select-none">
-    <!-- Спокойные фоновые эффекты и частицы -->
-    <canvas id="particles-canvas" class="absolute inset-0 w-full h-full pointer-events-none z-[1]"></canvas>
-    <div class="cyber-grid"></div>
-    <div class="ambient-teal"></div>
-    <div class="ambient-crimson"></div>
-
-    <!-- =========================================================
-         1. ЛЕВАЯ ВЕРТИКАЛЬНАЯ ПАНЕЛЬ С КОНТУРНЫМ СЛОВОМ «PRICE»
-         ========================================================= -->
-    <aside class="price-sidebar relative z-10 h-full flex flex-col items-center justify-between py-[2vh] overflow-hidden">
-      <!-- Бегущий вверх световой импульс по правой границе -->
-      <div class="sidebar-beam-up"></div>
-
-      <!-- Центральная вытянутая контурная надпись PRICE строго по центру колонки -->
-      <div class="relative flex-1 w-full flex items-center justify-center my-[0.4vh]">
-        <div class="price-center-slot">
-          <!-- Основной контурный слой -->
-          <div class="hollow-price-stack text-[9.2vh] select-none">
-            <span class="js-side-word">PRICE</span>
-          </div>
-          <!-- Слой светового блика внутри контура -->
-          <div aria-hidden="true" class="hollow-price-sheen absolute text-[9.2vh] select-none">
-            <span class="js-side-word">PRICE</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Нижние цифровые часы -->
-      <div class="relative z-10 flex flex-col items-center justify-center gap-[0.55vh] w-full px-[12%]">
-        <div class="w-full h-[1px] bg-gradient-to-r from-transparent via-rose-400/45 to-transparent"></div>
-        <span id="live-clock" class="font-cyber text-[1.2vh] font-bold tracking-wider text-rose-100/85 text-center">00:00</span>
-      </div>
-    </aside>
-
-    <!-- =========================================================
-         2. ПРАВАЯ ЧАСТЬ: ШАПКА, ТАРИФЫ И АКЦИЯ
-         ========================================================= -->
-    <main class="relative z-10 flex-1 h-full flex flex-col justify-between px-[2.2vh] py-[1.7vh] gap-[1.05vh] overflow-hidden">
-      <!-- ШАПКА: ПРАЙС-ЛИСТ + ПОДЗАГОЛОВОК + ЛОГОТИП -->
-      <header class="flex items-center justify-between gap-[1.2vh]">
-        <div class="flex flex-col items-start min-w-0">
-          <div class="flex items-center gap-[1vh] flex-wrap">
-            <h1 id="main-title-display" class="font-display font-black text-[3.45vh] leading-none tracking-[0.04em] text-slate-100 uppercase">
-              ПРАЙС<span class="text-teal-400">-</span>ЛИСТ
-            </h1>
-
-            <!-- Статус онлайн-синхронизации -->
-            <div id="sync-status-pill" class="flex items-center gap-[0.5vh] px-[0.85vh] py-[0.3vh] rounded-full bg-slate-900/90 border border-teal-500/25">
-              <span id="sync-dot" class="w-[0.6vh] h-[0.6vh] rounded-full bg-emerald-400"></span>
-              <span id="sync-label" class="text-[0.9vh] font-semibold tracking-wider text-slate-300 uppercase">ONLINE</span>
+  <div class="tv-stage">
+    <div id="tv-rotate-wrapper" class="tv-rotate-wrapper">
+      <div id="tv-frame" class="tv-frame">
+        <!-- Пользовательский арт на весь фон (опционально через редактор) -->
+<!-- ... existing code ... -->
+            <!-- Скрытые кнопки поворота (R) и настроек (E) -->
+            <div class="flex items-center gap-[0.5vh] shrink-0">
+              <button id="rotate-screen-btn" type="button" title="Повернуть экран на 90° (клавиша R)" class="w-[2.9vh] h-[2.9vh] rounded-lg bg-slate-900/75 hover:bg-sky-500/25 border border-slate-700/70 hover:border-sky-400/50 text-slate-400 hover:text-white flex items-center justify-center transition cursor-pointer">
+                <svg class="w-[1.5vh] h-[1.5vh]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 12a9 9 0 1 1-3-6.7L21 8"/>
+                  <path d="M21 3v5h-5"/>
+                </svg>
+              </button>
+              <button id="open-editor-btn" type="button" title="Настройки прайс-листа (клавиша E)" class="w-[2.9vh] h-[2.9vh] rounded-lg bg-slate-900/75 hover:bg-sky-500/25 border border-slate-700/70 hover:border-sky-400/50 text-slate-400 hover:text-white flex items-center justify-center transition cursor-pointer">
+                <svg class="w-[1.55vh] h-[1.55vh]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="3"/>
+                  <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9c.26.6.85 1 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+                </svg>
+              </button>
             </div>
           </div>
-
-          <!-- Подзаголовок -->
-          <div class="mt-[0.75vh] px-[1.2vh] py-[0.42vh] rounded-lg bg-teal-500/10 border border-teal-400/25">
-            <span id="subtitle-display" class="font-display font-bold text-[1.18vh] tracking-[0.14em] text-teal-300 uppercase">
-              АКТУАЛЬНЫЕ ТАРИФЫ КЛУБА
-            </span>
+<!-- ... existing code ... -->
           </div>
-        </div>
-
-        <!-- Векторный логотип клуба E-G справа в шапке -->
-        <div class="club-logo-slot w-[6.8vh] h-[6.8vh] shrink-0 flex items-center justify-center"></div>
-      </header>
-
-      <!-- =========================================================
-           БЛОК 1: PC • ОБЫЧНЫЙ ЗАЛ
-           ========================================================= -->
-      <section class="tv-card rounded-2xl px-[1.5vh] py-[1.15vh] flex flex-col">
-        <!-- Заголовок карточки и шапка колонок -->
-        <div class="flex items-end justify-between pb-[0.75vh] border-b border-slate-700/45">
-          <div class="zone-pill px-[1.25vh] py-[0.45vh] rounded-lg">
-            <h2 id="zone1-title" class="font-display font-extrabold text-[1.45vh] tracking-[0.06em] uppercase leading-none">
-              PC • ОБЫЧНЫЙ ЗАЛ
-            </h2>
-          </div>
-
-          <div class="grid grid-cols-2 gap-[1.4vh] text-right min-w-[38%]">
-            <div class="flex flex-col leading-tight">
-              <span class="font-display font-extrabold text-[1.02vh] text-slate-200 tracking-wider uppercase">БУДНИ</span>
-              <span class="text-[0.82vh] text-slate-400 font-semibold">ПН – ПТ</span>
-            </div>
-            <div class="flex flex-col leading-tight">
-              <span class="font-display font-extrabold text-[1.02vh] text-teal-300 tracking-wider uppercase">ВЫХОДНЫЕ</span>
-              <span class="text-[0.82vh] text-teal-400/75 font-semibold">СБ – ВС</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Список строк Обычного зала -->
-        <div id="zone1-rows-list" class="flex flex-col mt-[0.3vh]">
-          <!-- Генерируется через JS -->
-        </div>
-      </section>
-
-      <!-- =========================================================
-           БЛОК 2: PC • VIP ЗАЛ
-           ========================================================= -->
-      <section class="tv-card rounded-2xl px-[1.5vh] py-[1.15vh] flex flex-col">
-        <!-- Заголовок карточки и шапка колонок -->
-        <div class="flex items-end justify-between pb-[0.75vh] border-b border-slate-700/45">
-          <div class="zone-pill px-[1.25vh] py-[0.45vh] rounded-lg">
-            <h2 id="zone2-title" class="font-display font-extrabold text-[1.45vh] tracking-[0.06em] uppercase leading-none">
-              PC • VIP ЗАЛ
-            </h2>
-          </div>
-
-          <div class="grid grid-cols-2 gap-[1.4vh] text-right min-w-[38%]">
-            <div class="flex flex-col leading-tight">
-              <span class="font-display font-extrabold text-[1.02vh] text-slate-200 tracking-wider uppercase">БУДНИ</span>
-              <span class="text-[0.82vh] text-slate-400 font-semibold">ПН – ПТ</span>
-            </div>
-            <div class="flex flex-col leading-tight">
-              <span class="font-display font-extrabold text-[1.02vh] text-teal-300 tracking-wider uppercase">ВЫХОДНЫЕ</span>
-              <span class="text-[0.82vh] text-teal-400/75 font-semibold">СБ – ВС</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Список строк VIP зала -->
-        <div id="zone2-rows-list" class="flex flex-col mt-[0.3vh]">
-          <!-- Генерируется через JS -->
-        </div>
-      </section>
-
-      <!-- =========================================================
-           БЛОК 3: PLAYSTATION 5 (ПОЛНОШИРИННЫЙ, 2 КОЛОНКИ)
-           ========================================================= -->
-      <section class="tv-card rounded-2xl px-[1.5vh] py-[1.05vh] flex flex-col gap-[0.75vh]">
-        <div class="flex items-center justify-between">
-          <div class="zone-pill px-[1.25vh] py-[0.45vh] rounded-lg">
-            <h2 id="ps5-title" class="font-display font-extrabold text-[1.45vh] tracking-[0.06em] uppercase leading-none">
-              PLAYSTATION 5
-            </h2>
-          </div>
-          <span id="ps5-footer-note" class="text-[1.02vh] font-medium text-slate-400 tracking-wide">
-            4K TV • DualSense • 2 геймпада
-          </span>
-        </div>
-
-        <!-- Две полноширинные карточки тарифов PS5 -->
-        <div id="ps5-rows-grid" class="grid grid-cols-2 gap-[1.1vh]">
-          <!-- Генерируется через JS -->
-        </div>
-      </section>
-
-      <!-- =========================================================
-           БЛОК 4: АКЦИОННАЯ КАРТОЧКА (НОЧЬ 499 ₽ + КОЛА И PS5 В ПОДАРОК)
-           ========================================================= -->
-      <footer class="promo-card rounded-2xl px-[1.55vh] py-[1.15vh] flex flex-col gap-[0.85vh]">
-        <!-- Верхняя строка акции + кнопка настроек -->
-        <div class="flex items-center justify-between gap-[0.8vh]">
-          <div class="flex items-center gap-[0.95vh]">
-            <span id="promo-badge-display" class="badge-shimmer -rotate-2 px-[1.15vh] py-[0.34vh] rounded-lg bg-rose-600 text-white font-display font-black text-[1.1vh] tracking-[0.1em] uppercase shadow-[0_0_14px_rgba(225,29,72,0.5)]">
-              СКОРО
-            </span>
-            <span id="promo-kicker-display" class="font-display font-extrabold text-[1.15vh] tracking-[0.09em] text-teal-300 uppercase">
-              АКЦИЯ • НОЧНОЙ ТАРИФ
-            </span>
-          </div>
-
-          <!-- Полупрозрачная шестерёнка настроек (клавиша E) -->
-          <button
-            id="open-editor-btn"
-            title="Настройки и JSON-конфиг (клавиша E)"
-            class="w-[2.8vh] h-[2.8vh] rounded-lg bg-white/5 hover:bg-rose-500/25 border border-white/10 hover:border-rose-400/50 text-slate-400/55 hover:text-white flex items-center justify-center transition-all cursor-pointer"
-          >
-            <svg class="w-[1.5vh] h-[1.5vh]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <circle cx="12" cy="12" r="3"></circle>
-              <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
-            </svg>
-          </button>
-        </div>
-
-        <!-- Центральная строка: НОЧЬ 499 ₽ (строго в одну строку) + условия -->
-        <div class="flex items-baseline justify-between gap-[1vh] flex-wrap">
-          <div class="flex items-baseline gap-[0.85vh] whitespace-nowrap">
-            <span id="promo-main-label" class="font-display font-black text-[2.85vh] leading-none text-slate-100 uppercase tracking-tight">
-              НОЧЬ
-            </span>
-            <span id="promo-main-price" class="font-display font-black text-[3.55vh] leading-none text-rose-400 tracking-tight whitespace-nowrap drop-shadow-[0_0_14px_rgba(244,63,94,0.45)]">
-              499 ₽
-            </span>
-          </div>
-
-          <span id="promo-conditions-display" class="text-[1.12vh] font-bold text-slate-200 tracking-wide">
-            00:00 – 10:00 • будни • обычный зал
-          </span>
-        </div>
-
-        <!-- Нижний блок: две карточки подарков с иллюстрациями (Coca-Cola 1 л + PS5) -->
-        <div id="promo-gifts-list" class="grid grid-cols-2 gap-[1vh] pt-[0.25vh]">
-          <!-- Генерируется через JS -->
-        </div>
-      </footer>
-    </main>
-  </div>
-
-  <!-- =========================================================
-       СКРЫТАЯ ПАНЕЛЬ НАСТРОЕК И ОНЛАЙН-КОНФИГА (клавиша E)
-       ========================================================= -->
-  <div id="editor-modal" class="fixed inset-0 z-50 hidden bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
-    <div class="w-full max-w-2xl max-h-[90vh] bg-[#0b121e] border border-rose-500/35 rounded-2xl shadow-2xl flex flex-col overflow-hidden text-slate-100">
-      <!-- Шапка редактора -->
-      <div class="px-6 py-4 bg-[#121b2c] border-b border-slate-700/60 flex items-center justify-between">
-        <div>
-          <h3 class="font-display font-extrabold text-base text-rose-300 uppercase tracking-wide">
-            Редактор ТВ-прайса и онлайн-синхронизация
-          </h3>
-          <p class="text-xs text-slate-400 mt-0.5">
-            Клавиша <kbd class="px-1.5 py-0.5 bg-slate-800 rounded border border-slate-600 text-teal-300">E</kbd> открывает/закрывает это окно.
-          </p>
-        </div>
-        <button id="close-editor-btn" class="w-8 h-8 rounded-xl bg-slate-800 hover:bg-rose-600 text-slate-300 hover:text-white transition cursor-pointer flex items-center justify-center">
-          ✕
-        </button>
-      </div>
-
-      <!-- Форма настроек -->
-      <div id="editor-form-container" class="p-6 overflow-y-auto space-y-5 text-sm">
-        <!-- Онлайн JSON URL -->
-        <div class="p-4 rounded-xl bg-[#070c15] border border-teal-500/30 space-y-2">
-          <div class="flex items-center justify-between">
-            <label class="text-xs font-bold text-teal-300 uppercase">Онлайн-ссылка на JSON конфиг (автообновление каждые 60 сек)</label>
-            <button id="copy-json-btn" type="button" class="px-3 py-1 rounded-lg bg-teal-500/20 hover:bg-teal-500/35 border border-teal-400/40 text-teal-200 text-xs font-semibold transition cursor-pointer">
-              Скопировать JSON-конфиг
-            </button>
-          </div>
-          <input type="text" id="inp-remoteConfigUrl" placeholder="https://gist.githubusercontent.com/.../raw/price.json"
-            class="w-full px-3 py-2 rounded-xl bg-[#0d1524] border border-slate-700 focus:border-teal-400 outline-none text-xs text-slate-200" />
-          <p class="text-[11px] text-slate-400 leading-relaxed">
-            Также можно открыть файл на ТВ сразу с параметром в адресе: <code class="text-teal-300">index.html?config=ССЫЛКА_НА_JSON</code>
-          </p>
-        </div>
-
-        <!-- Основные заголовки -->
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-          <div>
-            <label class="block text-xs font-bold text-slate-300 uppercase mb-1">Боковое слово</label>
-            <input type="text" id="inp-sideWord" class="w-full px-3 py-2 rounded-xl bg-[#070c15] border border-slate-700 focus:border-rose-400 outline-none" />
-          </div>
-          <div>
-            <label class="block text-xs font-bold text-slate-300 uppercase mb-1">Заголовок</label>
-            <input type="text" id="inp-mainTitle" class="w-full px-3 py-2 rounded-xl bg-[#070c15] border border-slate-700 focus:border-rose-400 outline-none" />
-          </div>
-          <div>
-            <label class="block text-xs font-bold text-slate-300 uppercase mb-1">Подзаголовок</label>
-            <input type="text" id="inp-subtitle" class="w-full px-3 py-2 rounded-xl bg-[#070c15] border border-slate-700 focus:border-rose-400 outline-none" />
-          </div>
-        </div>
-
-        <!-- Логотип клуба -->
-        <div class="p-4 rounded-xl bg-[#0f1726] border border-slate-700/60 flex flex-wrap items-center justify-between gap-3">
-          <div>
-            <label class="block text-xs font-bold text-teal-300 uppercase">Логотип клуба (PNG / SVG / JPG)</label>
-            <p class="text-[11px] text-slate-400 mt-0.5">По умолчанию используется встроенный векторный логотип E-G.</p>
-          </div>
-          <div class="flex items-center gap-2">
-            <label class="px-3 py-1.5 rounded-lg bg-teal-500/20 hover:bg-teal-500/35 border border-teal-400/40 text-teal-200 text-xs font-semibold transition cursor-pointer">
-              Загрузить файл
-              <input type="file" id="inp-logoFile" accept="image/png,image/svg+xml,image/jpeg,image/webp" class="hidden" />
-            </label>
-            <button id="reset-logo-btn" type="button" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-600 text-slate-300 text-xs font-semibold transition cursor-pointer">
-              Вектор E-G
-            </button>
-          </div>
-        </div>
-
-        <!-- Зона 1: Обычный зал -->
-        <div class="p-4 rounded-xl bg-[#0f1726] border border-slate-700/60 space-y-3">
-          <div>
-            <label class="block text-xs font-bold text-teal-300 uppercase mb-1">Блок 1 — Название зала</label>
-            <input type="text" id="inp-zone1Title" class="w-full px-3 py-2 rounded-xl bg-[#070c15] border border-slate-700 outline-none" />
-          </div>
-          <div id="editor-zone1-rows" class="space-y-2"></div>
-        </div>
-
-        <!-- Зона 2: VIP зал -->
-        <div class="p-4 rounded-xl bg-[#0f1726] border border-slate-700/60 space-y-3">
-          <div>
-            <label class="block text-xs font-bold text-teal-300 uppercase mb-1">Блок 2 — Название зала</label>
-            <input type="text" id="inp-zone2Title" class="w-full px-3 py-2 rounded-xl bg-[#070c15] border border-slate-700 outline-none" />
-          </div>
-          <div id="editor-zone2-rows" class="space-y-2"></div>
-        </div>
-
-        <!-- Блок 3: PlayStation 5 -->
-        <div class="p-4 rounded-xl bg-[#0f1726] border border-slate-700/60 space-y-3">
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <div>
-              <label class="block text-xs font-bold text-teal-300 uppercase mb-1">Блок 3 — Консоли</label>
-              <input type="text" id="inp-ps5Title" class="w-full px-3 py-2 rounded-xl bg-[#070c15] border border-slate-700 outline-none" />
-            </div>
-            <div>
-              <label class="block text-xs font-bold text-teal-300 uppercase mb-1">Подпись снизу PS5</label>
-              <input type="text" id="inp-ps5Note" class="w-full px-3 py-2 rounded-xl bg-[#070c15] border border-slate-700 outline-none" />
-            </div>
-          </div>
-          <div id="editor-ps5-rows" class="space-y-2"></div>
-        </div>
-
-        <!-- Блок 4: Акция -->
-        <div class="p-4 rounded-xl bg-[#180d13] border border-rose-500/35 space-y-3">
-          <label class="block text-xs font-bold text-rose-300 uppercase">Блок 4 — Акция</label>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <div>
-              <label class="block text-[11px] text-slate-400 mb-1">Бейдж (напр. СКОРО / АКТИВНА)</label>
-              <input type="text" id="inp-promoBadge" class="w-full px-3 py-2 rounded-xl bg-[#070c15] border border-slate-700 outline-none" />
-            </div>
-            <div>
-              <label class="block text-[11px] text-slate-400 mb-1">Заголовок акции</label>
-              <input type="text" id="inp-promoKicker" class="w-full px-3 py-2 rounded-xl bg-[#070c15] border border-slate-700 outline-none" />
-            </div>
-            <div>
-              <label class="block text-[11px] text-slate-400 mb-1">Название тарифа (напр. НОЧЬ)</label>
-              <input type="text" id="inp-promoMainLabel" class="w-full px-3 py-2 rounded-xl bg-[#070c15] border border-slate-700 outline-none" />
-            </div>
-            <div>
-              <label class="block text-[11px] text-slate-400 mb-1">Цена акции (напр. 499 ₽)</label>
-              <input type="text" id="inp-promoMainPrice" class="w-full px-3 py-2 rounded-xl bg-[#070c15] border border-slate-700 outline-none" />
-            </div>
-            <div>
-              <label class="block text-[11px] text-slate-400 mb-1">Условия акции</label>
-              <input type="text" id="inp-promoConditions" class="w-full px-3 py-2 rounded-xl bg-[#070c15] border border-slate-700 outline-none" />
-            </div>
-            <div>
-              <label class="block text-[11px] text-slate-400 mb-1">Подарки (через запятую)</label>
-              <input type="text" id="inp-promoGifts" class="w-full px-3 py-2 rounded-xl bg-[#070c15] border border-slate-700 outline-none" />
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Футер редактора -->
-      <div class="px-6 py-4 bg-[#121b2c] border-t border-slate-700/60 flex flex-wrap items-center justify-between gap-3">
-        <button id="reset-default-btn" class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-bold uppercase tracking-wider transition cursor-pointer">
-          Сбросить по умолчанию
-        </button>
-        <div class="flex items-center gap-3">
-          <span id="editor-toast" class="text-xs text-emerald-400 font-semibold opacity-0 transition-opacity">Сохранено!</span>
-          <button id="save-editor-btn" class="px-5 py-2.5 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-display font-bold text-xs uppercase tracking-wider shadow-lg shadow-rose-600/25 transition cursor-pointer">
-            Применить и сохранить
-          </button>
-        </div>
+        </footer>
+      </main>
       </div>
     </div>
   </div>
 
-  <script>
-    /**
-     * Встроенный векторный SVG-логотип клуба E-G (выровненный, без шумов)
-     */
-    const DEFAULT_LOGO_SVG = `
-      <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="E-G Logo">
-        <defs>
-          <linearGradient id="egBorder" x1="16" y1="8" x2="104" y2="112" gradientUnits="userSpaceOnUse">
-            <stop offset="0%" stop-color="#38bdf8"/>
-            <stop offset="50%" stop-color="#2dd4bf"/>
-            <stop offset="100%" stop-color="#0ea5e9"/>
-          </linearGradient>
-          <linearGradient id="egFill" x1="60" y1="10" x2="60" y2="110" gradientUnits="userSpaceOnUse">
-            <stop offset="0%" stop-color="#0f2538"/>
-            <stop offset="100%" stop-color="#07101c"/>
-          </linearGradient>
-        </defs>
-        <!-- Внешний щит с острым верхом, ушами баннера и V-низом -->
-        <path d="M60 7 L102 27 L99 66 L108 62 L106 98 L77 101 L60 113 L43 101 L14 98 L12 62 L21 66 L18 27 Z"
-              fill="url(#egFill)" stroke="url(#egBorder)" stroke-width="3.2" stroke-linejoin="round"/>
-        <!-- Внутренний акцент нижнего V-угла -->
-        <path d="M49 97 L60 106 L71 97" stroke="#e2e8f0" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
-        <!-- Молнии по бокам -->
-        <path d="M29 34 L36 42 L31 44 L37 53" stroke="#38bdf8" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M91 34 L84 42 L89 44 L83 53" stroke="#38bdf8" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
-        <!-- Капюшон, наушники и силуэт геймера -->
-        <path d="M36 64 C36 44 45 25 60 21 C75 25 84 44 84 64 Z" fill="#0b1726" stroke="#38bdf8" stroke-width="2.4" stroke-linejoin="round"/>
-        <!-- Дуга наушников -->
-        <path d="M43 44 C43 29 51 22 60 22 C69 22 77 29 77 44" stroke="#cbd5e1" stroke-width="3" stroke-linecap="round"/>
-        <rect x="39" y="37" width="6.5" height="14" rx="3" fill="#e2e8f0" stroke="#38bdf8" stroke-width="1.5"/>
-        <rect x="74.5" y="37" width="6.5" height="14" rx="3" fill="#e2e8f0" stroke="#38bdf8" stroke-width="1.5"/>
-        <!-- Лицо в тени и светящиеся глаза -->
-        <path d="M49 38 C52 29 68 29 71 38 C71 50 66 57 60 59 C54 57 49 50 49 38 Z" fill="#050b14"/>
-        <path d="M52 40 L58 42.5 L53 43.5 Z" fill="#2dd4bf"/>
-        <path d="M68 40 L62 42.5 L67 43.5 Z" fill="#2dd4bf"/>
-        <!-- Плечи / складки худи -->
-        <path d="M34 65 L49 55 M86 65 L71 55 M44 65 L60 61 L76 65" stroke="#94a3b8" stroke-width="2.4" stroke-linecap="round"/>
-        <!-- Нижний баннер: буква E, электро-пульс, буква G -->
-        <path d="M18 68 H102" stroke="#38bdf8" stroke-width="1.6" stroke-opacity="0.5"/>
-        <!-- Буква E -->
-        <path d="M38 74 H24 V91 H38 M24 82.5 H35" stroke="#38bdf8" stroke-width="3.6" stroke-linecap="square" stroke-linejoin="round"/>
-        <!-- Импульс по центру -->
-        <path d="M44 82.5 H53 L57 76 L63 89 L67 82.5 H76" stroke="#2dd4bf" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
-        <!-- Буква G -->
-        <path d="M96 77 C93 73.5 85 73.5 82 77.5 C79.5 81 79.5 85 82 88.5 C85 92 93 92 96 88 V83 H89"
-              stroke="#38bdf8" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    `;
+  <!-- =========================================================
+<!-- ... existing code ... -->
+      <div class="p-5 overflow-y-auto custom-scroll space-y-5">
+        <!-- Поворот экрана под ТВ -->
+        <div class="p-3.5 rounded-xl bg-[#0f1726] border border-sky-500/30 flex flex-wrap items-center justify-between gap-2">
+          <div>
+            <span class="block text-xs font-bold text-sky-300 uppercase">Поворот экрана (клавиша R)</span>
+            <span class="text-[11px] text-slate-400">Можно также задавать в ссылке: ?rotate=90 или ?rotate=0</span>
+          </div>
+          <select id="inp-rotation" class="px-3 py-1.5 rounded-lg bg-[#070c15] border border-slate-700 text-xs font-bold text-slate-100 cursor-pointer">
+            <option value="90">90° (вертикальный ТВ)</option>
+            <option value="0">0° (обычный / ПК)</option>
+            <option value="270">270° (-90° в другую сторону)</option>
+            <option value="180">180° (перевёрнутый)</option>
+          </select>
+        </div>
 
-    /**
-     * Векторная иллюстрация бутылки Coca-Cola 1 л (для карточки подарка в акции)
-     */
-    const COLA_BOTTLE_SVG = `
-      <svg viewBox="0 0 64 116" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-full drop-shadow-[0_4px_10px_rgba(0,0,0,0.65)]" aria-label="Coca-Cola 1 л">
-        <defs>
-          <linearGradient id="colaCap" x1="25" y1="3" x2="39" y2="11" gradientUnits="userSpaceOnUse">
-            <stop offset="0%" stop-color="#f87171"/>
-            <stop offset="50%" stop-color="#dc2626"/>
-            <stop offset="100%" stop-color="#991b1b"/>
-          </linearGradient>
-          <linearGradient id="colaLiquid" x1="16" y1="24" x2="48" y2="108" gradientUnits="userSpaceOnUse">
-            <stop offset="0%" stop-color="#45120c"/>
-            <stop offset="45%" stop-color="#220806"/>
-            <stop offset="100%" stop-color="#120403"/>
-          </linearGradient>
-          <linearGradient id="colaLabel" x1="15" y1="42" x2="49" y2="66" gradientUnits="userSpaceOnUse">
-            <stop offset="0%" stop-color="#ef4444"/>
-            <stop offset="50%" stop-color="#dc2626"/>
-            <stop offset="100%" stop-color="#991b1b"/>
-          </linearGradient>
-          <linearGradient id="colaGlass" x1="18" y1="12" x2="46" y2="112" gradientUnits="userSpaceOnUse">
-            <stop offset="0%" stop-color="rgba(255,255,255,0.34)"/>
-            <stop offset="40%" stop-color="rgba(255,255,255,0.06)"/>
-            <stop offset="100%" stop-color="rgba(255,255,255,0.18)"/>
-          </linearGradient>
-        </defs>
-        <!-- Крышка -->
-        <rect x="25.5" y="3" width="13" height="7.5" rx="2.2" fill="url(#colaCap)"/>
-        <rect x="24.5" y="10" width="15" height="2.4" rx="1" fill="#b91c1c"/>
-        <!-- Прозрачное горлышко (воздушная прослойка) -->
-        <path d="M26 12.4 H38 L40.5 23 C40.5 23 36 24.5 32 24.5 C28 24.5 23.5 23 23.5 23 Z" fill="rgba(226,232,240,0.2)" stroke="rgba(255,255,255,0.32)" stroke-width="0.9"/>
-        <!-- Силуэт бутылки с напитком -->
-        <path d="M23.5 23 C20 30 16.5 36 16.5 44 C16.5 52 17.5 60 18.5 68 C16.8 77 16 88 17 98 C17.6 105 20 111 24 112 C27 112.5 29.5 110.5 32 110.5 C34.5 110.5 37 112.5 40 112 C44 111 46.4 105 47 98 C48 88 47.2 77 45.5 68 C46.5 60 47.5 52 47.5 44 C47.5 36 44 30 40.5 23 Z"
-              fill="url(#colaLiquid)" stroke="rgba(255,255,255,0.22)" stroke-width="1"/>
-        <!-- Этикетка Coca-Cola -->
-        <path d="M16.6 43.5 C22 45 42 45 47.4 43.5 C47.6 51 47 58.5 46.1 65.5 C41 67 23 67 17.9 65.5 C17 58.5 16.4 51 16.6 43.5 Z"
-              fill="url(#colaLabel)"/>
-        <!-- Фирменная белая волна на этикетке -->
-        <path d="M17.5 58.5 C25 53.5 38 62.5 46.3 56.5" stroke="#ffffff" stroke-width="1.6" stroke-linecap="round" stroke-opacity="0.9"/>
-        <text x="32" y="54.5" text-anchor="middle" fill="#ffffff" font-family="Montserrat, sans-serif" font-style="italic" font-weight="900" font-size="7.6" letter-spacing="-0.2">Cola</text>
-        <text x="32" y="63.2" text-anchor="middle" fill="rgba(255,255,255,0.82)" font-family="Inter, sans-serif" font-weight="700" font-size="3.4" letter-spacing="0.8">CLASSIC</text>
-        <!-- Стеклянные блики -->
-        <path d="M22.5 28 C20 34 19.5 40 19.5 42 M20.5 72 C19.5 82 19.5 92 21 102" stroke="rgba(255,255,255,0.34)" stroke-width="1.8" stroke-linecap="round"/>
-        <path d="M43 31 C44.5 36 45 40 45 42 M44 74 C44.5 84 44.2 94 43 102" stroke="rgba(255,255,255,0.16)" stroke-width="1.2" stroke-linecap="round"/>
-        <!-- Контурный блик всей бутылки -->
-        <path d="M26 12.4 L23.5 23 C20 30 16.5 36 16.5 44 C16.5 52 17.5 60 18.5 68 C16.8 77 16 88 17 98 C17.6 105 20 111 24 112" stroke="url(#colaGlass)" stroke-width="1" fill="none"/>
-      </svg>
-    `;
+        <!-- Онлайн-синхронизация JSON -->
+        <div class="p-4 rounded-xl bg-[#0f1726] border border-teal-500/30 space-y-2.5">
+<!-- ... existing code ... -->
+    /* =========================================================
+       ДАННЫЕ ПО УМОЛЧАНИЮ (АКТУАЛЬНЫЕ ТАРИФЫ КЛУБА)
+       ========================================================= */
+    const STORAGE_KEY = 'club_price_tv_v7';
+    const REMOTE_URL_KEY = 'club_price_remote_url_v7';
+    const ROTATE_KEY = 'club_price_rotate_v7';
 
-    /**
-     * Векторная иллюстрация PlayStation 5 + геймпад DualSense (для карточки подарка в акции)
-     */
-    const PS5_CONSOLE_SVG = `
-      <svg viewBox="0 0 112 116" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-full drop-shadow-[0_4px_12px_rgba(0,0,0,0.7)]" aria-label="PlayStation 5">
-        <defs>
-          <linearGradient id="ps5ShellL" x1="36" y1="8" x2="66" y2="106" gradientUnits="userSpaceOnUse">
-            <stop offset="0%" stop-color="#ffffff"/>
-            <stop offset="55%" stop-color="#e2e8f0"/>
-            <stop offset="100%" stop-color="#cbd5e1"/>
-          </linearGradient>
-          <linearGradient id="ps5ShellR" x1="68" y1="10" x2="96" y2="106" gradientUnits="userSpaceOnUse">
-            <stop offset="0%" stop-color="#f1f5f9"/>
-            <stop offset="100%" stop-color="#94a3b8"/>
-          </linearGradient>
-          <linearGradient id="ps5Core" x1="58" y1="12" x2="82" y2="104" gradientUnits="userSpaceOnUse">
-            <stop offset="0%" stop-color="#1e293b"/>
-            <stop offset="100%" stop-color="#020617"/>
-          </linearGradient>
-          <linearGradient id="ps5Led" x1="68" y1="14" x2="68" y2="62" gradientUnits="userSpaceOnUse">
-            <stop offset="0%" stop-color="#38bdf8"/>
-            <stop offset="100%" stop-color="rgba(56,189,248,0)"/>
-          </linearGradient>
-        </defs>
-        <!-- Подставка -->
-        <ellipse cx="69" cy="108" rx="22" ry="3.2" fill="#0f172a" stroke="rgba(148,163,184,0.35)" stroke-width="0.9"/>
-        <!-- Чёрный внутренний корпус -->
-        <path d="M56 14 L84 10 L87 106 L58 106 Z" fill="url(#ps5Core)"/>
-        <!-- Синяя фирменная подсветка PS5 вдоль ребра -->
-        <path d="M68 13 L68 58" stroke="url(#ps5Led)" stroke-width="2" stroke-linecap="round"/>
-        <!-- Правая боковая панель -->
-        <path d="M84 10 C89 9.5 92 14 91 22 L87 106 L82 106 L84 10 Z" fill="url(#ps5ShellR)"/>
-        <!-- Левая лицевая белая панель PS5 Slim -->
-        <path d="M40 16 C40 12 43 10 47 9 L69 5 C71 4.8 72 6.5 71.5 10 L68.5 107 L45 105 C42 104.5 40.5 102 40.5 98 Z" fill="url(#ps5ShellL)"/>
-        <!-- Тонкая чёрная полоса разделения панелей Slim -->
-        <path d="M40.5 55 L70 47" stroke="#0f172a" stroke-width="2.2" stroke-linecap="round"/>
-        <!-- Привод / лёгкая тень снизу панели -->
-        <path d="M45 64 C47 78 46 92 44 102" stroke="rgba(15,23,42,0.14)" stroke-width="2" stroke-linecap="round"/>
-
-        <!-- Геймпад DualSense на переднем плане слева -->
-        <g transform="translate(4, 70)">
-          <!-- Чёрная нижняя вставка -->
-          <path d="M12 22 C16 18 34 18 38 22 L42 33 C40 36 36 35 34 31 L30 27 H20 L16 31 C14 35 10 36 8 33 Z" fill="#0f172a"/>
-          <!-- Белый корпус и рукоятки -->
-          <path d="M14 9 C18 7.5 32 7.5 36 9 C41 11 45 18 46 28 C46.5 34 42 38 38.5 36 C36 34.5 34 28 32 25 H18 C16 28 14 34.5 11.5 36 C8 38 3.5 34 4 28 C5 18 9 11 14 9 Z"
-                fill="#f8fafc" stroke="#cbd5e1" stroke-width="0.9"/>
-          <!-- Сенсорная панель + синий контур -->
-          <path d="M19 10 H31 L30 18.5 H20 Z" fill="#e2e8f0" stroke="#38bdf8" stroke-width="0.9"/>
-          <!-- Стики -->
-          <circle cx="18.5" cy="22.5" r="3" fill="#1e293b" stroke="#64748b" stroke-width="0.8"/>
-          <circle cx="31.5" cy="22.5" r="3" fill="#1e293b" stroke="#64748b" stroke-width="0.8"/>
-          <!-- Крестовина и кнопки -->
-          <path d="M11 15.5 H15 M13 13.5 V17.5" stroke="#334155" stroke-width="1.3" stroke-linecap="round"/>
-          <circle cx="37" cy="14" r="1" fill="#334155"/>
-          <circle cx="37" cy="17.5" r="1" fill="#334155"/>
-          <circle cx="35.2" cy="15.7" r="1" fill="#334155"/>
-          <circle cx="38.8" cy="15.7" r="1" fill="#334155"/>
-        </g>
-      </svg>
-    `;
-
-    /**
-     * Актуальные тарифы компьютерного клуба
-     */
     const DEFAULT_PRICE_DATA = {
-      customLogo: '',
-      sideWord: 'PRICE',
-      mainTitle: 'ПРАЙС-ЛИСТ',
-      subtitle: 'АКТУАЛЬНЫЕ ТАРИФЫ КЛУБА',
-      zone1Title: 'PC • ОБЫЧНЫЙ ЗАЛ',
-      zone1Rows: [
-        { label: '1 час', time: '', weekdayPrice: '150 ₽', weekendPrice: '170 ₽' },
-        { label: '3 часа', time: '', weekdayPrice: '400 ₽', weekendPrice: '500 ₽' },
-        { label: '5 часов', time: '08:00 – 13:00', weekdayPrice: '500 ₽', weekendPrice: '500 ₽' },
-        { label: '5 часов', time: '13:00 – 08:00', weekdayPrice: '600 ₽', weekendPrice: '700 ₽' },
-        { label: 'Ночь', time: '22:00 – 07:00', weekdayPrice: '800 ₽', weekendPrice: '900 ₽' }
-      ],
-      zone2Title: 'PC • VIP ЗАЛ',
-      zone2Rows: [
-        { label: '1 час', time: '', weekdayPrice: '200 ₽', weekendPrice: '220 ₽' },
-        { label: '3 часа', time: '', weekdayPrice: '500 ₽', weekendPrice: '600 ₽' },
-        { label: '5 часов', time: '08:00 – 13:00', weekdayPrice: '600 ₽', weekendPrice: '700 ₽' },
-        { label: '5 часов', time: '13:00 – 08:00', weekdayPrice: '700 ₽', weekendPrice: '800 ₽' },
-        { label: 'Ночь', time: '22:00 – 07:00', weekdayPrice: '900 ₽', weekendPrice: '1000 ₽' }
-      ],
-      ps5Title: 'PLAYSTATION 5',
-      ps5Note: '4K TV • DualSense • 2 геймпада',
-      ps5Rows: [
-        { label: '1 час', time: '', price: '400 ₽' },
-        { label: 'Ночь', time: '22:00 – 07:00', price: '2000 ₽' }
-      ],
-      promoBadge: 'СКОРО',
-      promoKicker: 'АКЦИЯ • ПАКЕТ «НОЧЬ»',
-      promoMainLabel: 'НОЧЬ',
-      promoMainPrice: '499 ₽',
-      promoConditions: '00:00 – 10:00 • будни • обычный зал',
-      promoGifts: ['Coca-Cola 1 литр', 'Время на PlayStation 5']
-    };
-
-    const STORAGE_KEY = 'cyber_club_tv_price_v4';
-    const REMOTE_URL_KEY = 'cyber_club_tv_remote_url_v4';
-
+<!-- ... existing code ... -->
     let priceData = loadPriceData();
-    let remoteConfigUrl = getInitialRemoteUrl();
+    let remoteConfigUrl = new URLSearchParams(window.location.search).get('config') || localStorage.getItem(REMOTE_URL_KEY) || '';
+    let screenRotation = loadInitialRotation();
 
-    function getInitialRemoteUrl() {
-      try {
-        const params = new URLSearchParams(window.location.search);
-        const urlParam = params.get('config');
-        if (urlParam) {
-          localStorage.setItem(REMOTE_URL_KEY, urlParam);
-          return urlParam;
-        }
-        return localStorage.getItem(REMOTE_URL_KEY) || '';
-      } catch (e) {
-        return '';
+    function loadInitialRotation() {
+      const param = new URLSearchParams(window.location.search).get('rotate');
+      if (param !== null && param !== '') {
+        const parsed = ((Number(param) % 360) + 360) % 360;
+        if ([0, 90, 180, 270].includes(parsed)) return parsed;
       }
+      const saved = localStorage.getItem(ROTATE_KEY);
+      if (saved !== null) {
+        const parsed = Number(saved);
+        if ([0, 90, 180, 270].includes(parsed)) return parsed;
+      }
+      // По умолчанию 90° по часовой стрелке под вертикальный ТВ с горизонтальным выходом Windows
+      return 90;
+    }
+
+    function applyScreenRotation() {
+      const wrapper = document.getElementById('tv-rotate-wrapper');
+      const frame = document.getElementById('tv-frame');
+      if (!wrapper || !frame) return;
+
+      const vw = window.innerWidth;
+      const vh = window.innerHeight;
+
+      if (screenRotation === 90 || screenRotation === 270) {
+        // Фиксируем портретные пропорции 9:16 и масштабируем под 100% площади экрана после поворота
+        const frameH = vh;
+        const frameW = vh * (9 / 16);
+        frame.style.height = `${frameH}px`;
+        frame.style.width = `${frameW}px`;
+        const scale = Math.min(vw / frameH, vh / frameW);
+        wrapper.style.transform = `rotate(${screenRotation}deg) scale(${scale})`;
+      } else {
+        frame.style.height = '100vh';
+        frame.style.width = 'min(100vw, calc(100vh * 9 / 16))';
+        wrapper.style.transform = screenRotation === 180 ? 'rotate(180deg)' : 'none';
+      }
+    }
+
+    function setScreenRotation(deg, notify = true) {
+      screenRotation = ((Number(deg) % 360) + 360) % 360;
+      try { localStorage.setItem(ROTATE_KEY, String(screenRotation)); } catch {}
+      applyScreenRotation();
+      if (notify) showToast(`Поворот экрана: ${screenRotation}°`);
     }
 
     function loadPriceData() {
-      try {
-        const saved = localStorage.getItem(STORAGE_KEY);
-        if (saved) {
-          return { ...DEFAULT_PRICE_DATA, ...JSON.parse(saved) };
-        }
-      } catch (e) {
-        console.warn('Не удалось прочитать localStorage:', e);
-      }
-      return JSON.parse(JSON.stringify(DEFAULT_PRICE_DATA));
-    }
-
-    function savePriceData() {
-      try {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(priceData));
-        localStorage.setItem(REMOTE_URL_KEY, remoteConfigUrl);
-      } catch (e) {
-        console.warn('Ошибка сохранения в localStorage:', e);
-      }
-    }
-
-    function escapeHtml(str) {
-      return String(str || '')
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;');
-    }
-
-    /**
-     * Отрисовка логотипа во всех слотах
-     */
-    function renderLogos() {
-      document.querySelectorAll('.club-logo-slot').forEach(slot => {
-        if (priceData.customLogo) {
-          slot.innerHTML = `<img src="${priceData.customLogo}" alt="Logo" />`;
-        } else {
-          slot.innerHTML = DEFAULT_LOGO_SVG;
-        }
-      });
-    }
-
-    /**
-     * Генерация строки тарифа для PC-залов (Обычный / VIP)
-     */
-    function renderPcRowHTML(row) {
-      return `
-        <div class="tariff-row flex items-center justify-between py-[0.7vh] gap-[1vh]">
-          <div class="flex items-baseline gap-[0.8vh] min-w-0 flex-wrap">
-            <span class="font-display font-bold text-[1.42vh] text-slate-100 whitespace-nowrap">
-              ${escapeHtml(row.label)}
-            </span>
-            ${row.time ? `<span class="text-[1vh] font-medium text-slate-400 whitespace-nowrap">${escapeHtml(row.time)}</span>` : ''}
-          </div>
-          <div class="grid grid-cols-2 gap-[1.4vh] text-right min-w-[38%] shrink-0">
-            <span class="font-display font-extrabold text-[1.58vh] text-slate-100 whitespace-nowrap">
-              ${escapeHtml(row.weekdayPrice)}
-            </span>
-            <span class="font-display font-extrabold text-[1.58vh] text-teal-300 whitespace-nowrap">
-              ${escapeHtml(row.weekendPrice)}
-            </span>
-          </div>
-        </div>
-      `;
-    }
-
-    /**
-     * Полная отрисовка прайс-листа
-     */
-    function renderPriceBoard() {
-      renderLogos();
-
-      document.querySelectorAll('.js-side-word').forEach(el => {
-        el.textContent = priceData.sideWord || 'PRICE';
-      });
-
-      const titleEl = document.getElementById('main-title-display');
-      const rawTitle = priceData.mainTitle || 'ПРАЙС-ЛИСТ';
-      if (rawTitle.includes('-')) {
-        const parts = rawTitle.split('-');
-        titleEl.innerHTML = `${escapeHtml(parts[0])}<span class="text-teal-400">-</span>${escapeHtml(parts.slice(1).join('-'))}`;
-      } else {
-        titleEl.textContent = rawTitle;
-      }
-
-      document.getElementById('subtitle-display').textContent = priceData.subtitle;
-      document.getElementById('zone1-title').textContent = priceData.zone1Title;
-      document.getElementById('zone2-title').textContent = priceData.zone2Title;
-
-      document.getElementById('zone1-rows-list').innerHTML =
-        (priceData.zone1Rows || []).map(renderPcRowHTML).join('');
-      document.getElementById('zone2-rows-list').innerHTML =
-        (priceData.zone2Rows || []).map(renderPcRowHTML).join('');
-
-      // PlayStation 5 (2 колонки на всю ширину)
-      document.getElementById('ps5-title').textContent = priceData.ps5Title;
-      document.getElementById('ps5-footer-note').textContent = priceData.ps5Note;
-      document.getElementById('ps5-rows-grid').innerHTML = (priceData.ps5Rows || []).map(item => `
-        <div class="rounded-xl bg-[#09111d] border border-slate-700/45 px-[1.25vh] py-[0.85vh] flex items-center justify-between gap-[0.6vh]">
-          <div class="flex flex-col leading-tight">
-            <span class="font-display font-bold text-[1.42vh] text-slate-100">${escapeHtml(item.label)}</span>
-            ${item.time ? `<span class="text-[0.96vh] text-slate-400 mt-[0.15vh]">${escapeHtml(item.time)}</span>` : ''}
-          </div>
-          <span class="font-display font-extrabold text-[1.68vh] text-teal-300 whitespace-nowrap">
-            ${escapeHtml(item.price)}
-          </span>
-        </div>
-      `).join('');
-
-      // Акционный блок
-      document.getElementById('promo-badge-display').textContent = priceData.promoBadge;
-      document.getElementById('promo-kicker-display').textContent = priceData.promoKicker;
-      document.getElementById('promo-main-label').textContent = priceData.promoMainLabel;
-      document.getElementById('promo-main-price').textContent = priceData.promoMainPrice;
-
-      // Выделяем временной интервал в условиях акции бирюзовым (как на референсе)
-      const condEl = document.getElementById('promo-conditions-display');
-      const condText = priceData.promoConditions || '';
-      if (condText.includes('•')) {
-        const [firstPart, ...restParts] = condText.split('•');
-        condEl.innerHTML = `<span class="text-teal-300">${escapeHtml(firstPart.trim())}</span> • ${escapeHtml(restParts.join('•').trim())}`;
-      } else {
-        condEl.textContent = condText;
-      }
-
-      // Отрисовка визуальных карточек подарков (бутылка Coca-Cola + PlayStation 5)
-      const gifts = Array.isArray(priceData.promoGifts) ? priceData.promoGifts : [];
-      document.getElementById('promo-gifts-list').innerHTML = gifts.map((g, idx) => {
-        const lower = g.toLowerCase();
-        const isPs5 = lower.includes('ps') || lower.includes('playstation') || lower.includes('пс') || (idx === 1 && !lower.includes('cola') && !lower.includes('кола'));
-        const iconSvg = isPs5 ? PS5_CONSOLE_SVG : COLA_BOTTLE_SVG;
-        const cardExtraClass = isPs5 ? 'gift-mini-card--ps5' : '';
-        const iconBoxClass = isPs5 ? 'w-[5.2vh] h-[5.4vh]' : 'w-[3.4vh] h-[5.4vh]';
-
-        return `
-          <div class="gift-mini-card ${cardExtraClass} rounded-xl px-[1.05vh] py-[0.7vh] flex items-center gap-[0.9vh] overflow-hidden">
-            <div class="${iconBoxClass} shrink-0 flex items-center justify-center">
-              ${iconSvg}
-            </div>
-            <div class="flex flex-col justify-center min-w-0 leading-tight">
-              <span class="font-display font-extrabold text-[0.86vh] tracking-[0.08em] text-rose-400 uppercase mb-[0.22vh]">
-                В ПОДАРОК
-              </span>
-              <span class="font-display font-extrabold text-[1.22vh] text-slate-100 leading-snug">
-                ${escapeHtml(g)}
-              </span>
-            </div>
-          </div>
-        `;
-      }).join('');
-    }
-
-    /**
-     * Онлайн-загрузка свежего JSON с сервера / GitHub Gist каждые 60 сек
-     */
-    async function syncRemoteConfig() {
-      const dot = document.getElementById('sync-dot');
-      const label = document.getElementById('sync-label');
-
-      if (!remoteConfigUrl) {
-        dot.className = 'w-[0.65vh] h-[0.65vh] rounded-full bg-emerald-400';
-        label.textContent = 'ONLINE';
-        return;
-      }
-
-      try {
-        const sep = remoteConfigUrl.includes('?') ? '&' : '?';
-        const res = await fetch(`${remoteConfigUrl}${sep}_t=${Date.now()}`, { cache: 'no-store' });
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        const remoteJson = await res.json();
-        priceData = { ...priceData, ...remoteJson };
-        savePriceData();
-        renderPriceBoard();
-        dot.className = 'w-[0.65vh] h-[0.65vh] rounded-full bg-emerald-400 animate-pulse';
-        label.textContent = 'SYNC OK';
-      } catch (err) {
-        console.warn('Ошибка фоновой синхронизации JSON:', err);
-        dot.className = 'w-[0.65vh] h-[0.65vh] rounded-full bg-amber-400';
-        label.textContent = 'LOCAL';
-      }
-    }
-
-    /**
-     * Живые часы + защита матрицы ТВ от выгорания (микросдвиг на 1px раз в 3 минуты)
-     */
-    function updateClock() {
-      const now = new Date();
-      const hh = String(now.getHours()).padStart(2, '0');
-      const mm = String(now.getMinutes()).padStart(2, '0');
-      const el = document.getElementById('live-clock');
-      if (el) el.textContent = `${hh}:${mm}`;
-    }
-
-    function initBurnInProtection() {
-      const viewport = document.getElementById('tv-viewport');
-      const shifts = [
-        'translate(0px, 0px)',
-        'translate(1px, 0px)',
-        'translate(1px, 1px)',
-        'translate(0px, 1px)'
-      ];
-      let step = 0;
-      setInterval(() => {
-        step = (step + 1) % shifts.length;
-        viewport.style.transform = shifts[step];
-      }, 180000);
-    }
-
-    /**
-     * Очень деликатные фоновые микрочастицы (не слепят в тёмном зале)
-     */
-    function initSubtleParticles() {
-      const canvas = document.getElementById('particles-canvas');
-      const ctx = canvas.getContext('2d');
-      let width = 0;
-      let height = 0;
-      const particles = [];
-
+<!-- ... existing code ... -->
       function resize() {
-        const rect = canvas.parentElement.getBoundingClientRect();
-        width = canvas.width = rect.width;
-        height = canvas.height = rect.height;
+        // Используем offsetWidth/offsetHeight, чтобы поворот 90° не искажал размер canvas
+        const parent = canvas.parentElement;
+        w = canvas.width = Math.max(1, parent.offsetWidth);
+        h = canvas.height = Math.max(1, parent.offsetHeight);
       }
 
       window.addEventListener('resize', resize);
-      resize();
-
-      for (let i = 0; i < 24; i++) {
-        const isCrimson = i % 3 === 0;
-        particles.push({
-          x: Math.random() * width,
-          y: Math.random() * height,
-          r: Math.random() * 1.4 + 0.5,
-          vx: (Math.random() - 0.5) * 0.14,
-          vy: -Math.random() * 0.22 - 0.06,
-          color: isCrimson ? '244, 63, 94' : '45, 212, 191',
-          alpha: Math.random() * 0.28 + 0.08
-        });
-      }
-
-      function animate() {
-        ctx.clearRect(0, 0, width, height);
-        for (const p of particles) {
-          p.x += p.vx;
-          p.y += p.vy;
-
-          if (p.y < -8) {
-            p.y = height + 8;
-            p.x = Math.random() * width;
-          }
-          if (p.x < 0) p.x = width;
-          if (p.x > width) p.x = 0;
-
-          ctx.beginPath();
-          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-          ctx.fillStyle = `rgba(${p.color}, ${p.alpha})`;
-          ctx.fill();
-        }
-        requestAnimationFrame(animate);
-      }
-
-      animate();
-    }
-
-    /**
-     * Логика редактора (клавиша E или шестерёнка)
-     */
-    const editorModal = document.getElementById('editor-modal');
-
+<!-- ... existing code ... -->
     function populateEditor() {
-      document.getElementById('inp-remoteConfigUrl').value = remoteConfigUrl;
-      document.getElementById('inp-sideWord').value = priceData.sideWord;
-      document.getElementById('inp-mainTitle').value = priceData.mainTitle;
-      document.getElementById('inp-subtitle').value = priceData.subtitle;
-      document.getElementById('inp-zone1Title').value = priceData.zone1Title;
-      document.getElementById('inp-zone2Title').value = priceData.zone2Title;
-      document.getElementById('inp-ps5Title').value = priceData.ps5Title;
-      document.getElementById('inp-ps5Note').value = priceData.ps5Note;
-      document.getElementById('inp-promoBadge').value = priceData.promoBadge;
-      document.getElementById('inp-promoKicker').value = priceData.promoKicker;
-      document.getElementById('inp-promoMainLabel').value = priceData.promoMainLabel;
-      document.getElementById('inp-promoMainPrice').value = priceData.promoMainPrice;
-      document.getElementById('inp-promoConditions').value = priceData.promoConditions;
-      document.getElementById('inp-promoGifts').value = (priceData.promoGifts || []).join(', ');
+      setInputVal('inp-rotation', String(screenRotation));
+      setInputVal('inp-remoteConfigUrl', remoteConfigUrl);
 
-      renderPcEditorRows('editor-zone1-rows', priceData.zone1Rows, 'z1');
-      renderPcEditorRows('editor-zone2-rows', priceData.zone2Rows, 'z2');
-
-      const ps5Container = document.getElementById('editor-ps5-rows');
-      ps5Container.innerHTML = (priceData.ps5Rows || []).map((r, i) => `
-        <div class="grid grid-cols-12 gap-2">
-          <input type="text" data-ps5="${i}" data-field="label" value="${escapeHtml(r.label)}" class="col-span-4 px-2.5 py-1.5 rounded-lg bg-[#070c15] border border-slate-700 text-xs" />
-          <input type="text" data-ps5="${i}" data-field="time" value="${escapeHtml(r.time)}" placeholder="Время" class="col-span-5 px-2.5 py-1.5 rounded-lg bg-[#070c15] border border-slate-700 text-xs text-slate-300" />
-          <input type="text" data-ps5="${i}" data-field="price" value="${escapeHtml(r.price)}" class="col-span-3 px-2.5 py-1.5 rounded-lg bg-[#070c15] border border-slate-700 text-xs font-bold text-teal-300" />
-        </div>
-      `).join('');
-    }
-
-    function renderPcEditorRows(containerId, rows, prefix) {
-      const container = document.getElementById(containerId);
-      container.innerHTML = (rows || []).map((r, idx) => `
-        <div class="grid grid-cols-12 gap-2">
-          <input type="text" data-zone="${prefix}" data-idx="${idx}" data-field="label" value="${escapeHtml(r.label)}" class="col-span-3 px-2.5 py-1.5 rounded-lg bg-[#070c15] border border-slate-700 text-xs" />
-          <input type="text" data-zone="${prefix}" data-idx="${idx}" data-field="time" value="${escapeHtml(r.time)}" placeholder="Время" class="col-span-3 px-2.5 py-1.5 rounded-lg bg-[#070c15] border border-slate-700 text-xs text-slate-300" />
-          <input type="text" data-zone="${prefix}" data-idx="${idx}" data-field="weekdayPrice" value="${escapeHtml(r.weekdayPrice)}" class="col-span-3 px-2.5 py-1.5 rounded-lg bg-[#070c15] border border-slate-700 text-xs font-bold text-slate-100" />
-          <input type="text" data-zone="${prefix}" data-idx="${idx}" data-field="weekendPrice" value="${escapeHtml(r.weekendPrice)}" class="col-span-3 px-2.5 py-1.5 rounded-lg bg-[#070c15] border border-slate-700 text-xs font-bold text-teal-300" />
-        </div>
-      `).join('');
-    }
-
-    function showToast(text) {
-      const toast = document.getElementById('editor-toast');
-      toast.textContent = text;
-      toast.style.opacity = '1';
-      setTimeout(() => {
-        toast.style.opacity = '0';
-      }, 2000);
-    }
-
+      const bgOp = Number(priceData.bgArtOpacity) || 22;
+<!-- ... existing code ... -->
     function saveFromEditor() {
-      remoteConfigUrl = document.getElementById('inp-remoteConfigUrl').value.trim();
-      priceData.sideWord = document.getElementById('inp-sideWord').value.trim() || 'PRICE';
-      priceData.mainTitle = document.getElementById('inp-mainTitle').value.trim() || 'ПРАЙС-ЛИСТ';
-      priceData.subtitle = document.getElementById('inp-subtitle').value.trim();
-      priceData.zone1Title = document.getElementById('inp-zone1Title').value.trim();
-      priceData.zone2Title = document.getElementById('inp-zone2Title').value.trim();
-      priceData.ps5Title = document.getElementById('inp-ps5Title').value.trim();
-      priceData.ps5Note = document.getElementById('inp-ps5Note').value.trim();
-      priceData.promoBadge = document.getElementById('inp-promoBadge').value.trim();
-      priceData.promoKicker = document.getElementById('inp-promoKicker').value.trim();
-      priceData.promoMainLabel = document.getElementById('inp-promoMainLabel').value.trim();
-      priceData.promoMainPrice = document.getElementById('inp-promoMainPrice').value.trim();
-      priceData.promoConditions = document.getElementById('inp-promoConditions').value.trim();
-      priceData.promoGifts = document.getElementById('inp-promoGifts').value
-        .split(',')
-        .map(s => s.trim())
-        .filter(Boolean);
+      const rotEl = document.getElementById('inp-rotation');
+      if (rotEl) setScreenRotation(Number(rotEl.value), false);
 
-      document.querySelectorAll('[data-zone]').forEach(el => {
-        const arr = el.dataset.zone === 'z1' ? priceData.zone1Rows : priceData.zone2Rows;
-        const idx = Number(el.dataset.idx);
-        if (arr[idx]) arr[idx][el.dataset.field] = el.value;
-      });
-
-      document.querySelectorAll('[data-ps5]').forEach(el => {
-        const idx = Number(el.dataset.ps5);
-        if (priceData.ps5Rows[idx]) priceData.ps5Rows[idx][el.dataset.field] = el.value;
-      });
-
-      savePriceData();
-      renderPriceBoard();
-      if (remoteConfigUrl) syncRemoteConfig();
-      showToast('Сохранено!');
-    }
-
-    document.getElementById('copy-json-btn').addEventListener('click', () => {
-      const jsonStr = JSON.stringify(priceData, null, 2);
-      const ta = document.createElement('textarea');
-      ta.value = jsonStr;
-      document.body.appendChild(ta);
-      ta.select();
-      document.execCommand('copy');
-      document.body.removeChild(ta);
-      showToast('JSON скопирован в буфер!');
-    });
-
-    // Загрузка пользовательского логотипа
-    document.getElementById('inp-logoFile').addEventListener('change', (e) => {
-      const file = e.target.files && e.target.files[0];
-      if (!file) return;
-      const reader = new FileReader();
-      reader.onload = (ev) => {
-        priceData.customLogo = ev.target.result;
-        savePriceData();
-        renderLogos();
-        showToast('Логотип обновлён!');
-      };
-      reader.readAsDataURL(file);
-    });
-
-    // Сброс на встроенный векторный логотип E-G
-    document.getElementById('reset-logo-btn').addEventListener('click', () => {
-      priceData.customLogo = '';
-      document.getElementById('inp-logoFile').value = '';
-      savePriceData();
-      renderLogos();
-      showToast('Возвращён вектор E-G!');
+      remoteConfigUrl = getInputVal('inp-remoteConfigUrl', remoteConfigUrl);
+      priceData.sideWord = getInputVal('inp-sideWord', 'PRICE') || 'PRICE';
+<!-- ... existing code ... -->
+    /* Обработчики событий редактора */
+    document.getElementById('rotate-screen-btn').addEventListener('click', () => {
+      setScreenRotation((screenRotation + 90) % 360, true);
     });
 
     document.getElementById('open-editor-btn').addEventListener('click', () => {
-      populateEditor();
-      editorModal.classList.remove('hidden');
-    });
-
-    document.getElementById('close-editor-btn').addEventListener('click', () => {
-      editorModal.classList.add('hidden');
-    });
-
-    document.getElementById('save-editor-btn').addEventListener('click', saveFromEditor);
-
-    document.getElementById('reset-default-btn').addEventListener('click', () => {
-      priceData = JSON.parse(JSON.stringify(DEFAULT_PRICE_DATA));
-      savePriceData();
-      populateEditor();
-      renderPriceBoard();
-      showToast('Сброшено!');
-    });
-
-    editorModal.addEventListener('click', (e) => {
-      if (e.target === editorModal) editorModal.classList.add('hidden');
-    });
-
+<!-- ... existing code ... -->
+    // Горячие клавиши: E — редактор, R — поворот на 90°
     window.addEventListener('keydown', (e) => {
-      const tag = document.activeElement.tagName.toLowerCase();
-      if (tag === 'input' || tag === 'textarea') return;
-      if (e.key.toLowerCase() === 'e' || e.key.toLowerCase() === 'у') {
-        e.preventDefault();
-        if (editorModal.classList.contains('hidden')) {
-          populateEditor();
-          editorModal.classList.remove('hidden');
-        } else {
-          editorModal.classList.add('hidden');
-        }
-      } else if (e.key === 'Escape' && !editorModal.classList.contains('hidden')) {
+      if (e.key === 'Escape' && !editorModal.classList.contains('hidden')) {
         editorModal.classList.add('hidden');
+        return;
+      }
+      if (!['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement.tagName)) {
+        if (e.key === 'r' || e.key === 'R' || e.key === 'к' || e.key === 'К') {
+          setScreenRotation((screenRotation + 90) % 360, true);
+          return;
+        }
+        if (e.key === 'e' || e.key === 'E' || e.key === 'у' || e.key === 'У') {
+          if (editorModal.classList.contains('hidden')) {
+            populateEditor();
+            editorModal.classList.remove('hidden');
+          } else {
+            editorModal.classList.add('hidden');
+          }
+        }
       }
     });
 
+    window.addEventListener('resize', applyScreenRotation);
+
+    /* Запуск всех систем после загрузки страницы */
     window.onload = function () {
+      applyScreenRotation();
       renderPriceBoard();
       updateClock();
       setInterval(updateClock, 10000);
-      initBurnInProtection();
-      initSubtleParticles();
-      syncRemoteConfig();
-      setInterval(syncRemoteConfig, 60000);
-    };
-  </script>
-</body>
-</html>
+<!-- ... existing code ... -->
